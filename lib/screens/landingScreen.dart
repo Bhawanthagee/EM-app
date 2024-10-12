@@ -23,7 +23,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
     Screens = [
       ExpensesScreen(userId: widget.userId),
-      const StatScreen(),
+      StatScreen(userId: widget.userId,),
     ];
   }
   int _selectedIndex =0;

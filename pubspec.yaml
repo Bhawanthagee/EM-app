@@ -37,6 +37,9 @@ dependencies:
   intl: ^0.19.0
   persistent_bottom_nav_bar_v2: ^5.3.0
   curved_navigation_bar: ^1.0.6
+#  flutter_charts: ^0.5.2
+  fl_chart: ^0.69.0
+  syncfusion_flutter_charts: ^27.1.52
 
 
   # The following adds the Cupertino Icons font to your application.

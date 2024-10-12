@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseListView extends StatelessWidget {
-  final String userId; // Pass userId from Homepage
+  final String userId;
   final ExpenseService expenseService;
 
   const ExpenseListView({
-    Key? key,
+    super.key,
     required this.userId,
     required this.expenseService,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class ExpenseListView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFE2F1E7),
+                  color: const Color(0xFFE2F1E7),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
@@ -80,7 +80,7 @@ class ExpenseListView extends StatelessWidget {
                     "Rs. ${expense.amount.toStringAsFixed(2)}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.green,
+                      color: Colors.red,
                     ),
                   ),
                   onLongPress: () {

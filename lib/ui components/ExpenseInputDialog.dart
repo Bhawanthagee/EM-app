@@ -19,19 +19,28 @@ class ExpenseInputDialog extends StatefulWidget {
 }
 
 class _ExpenseInputDialogState extends State<ExpenseInputDialog> {
-  final TextEditingController _typeTextEditingController = TextEditingController();
   final TextEditingController _commentTextEditingController = TextEditingController();
   final TextEditingController _priceEditingController = TextEditingController();
 
+  String? _selectedType;
   bool _isLoading = false;
   bool _isTypeValid = true;
   bool _isPriceValid = true;
   bool _formSubmitted = false;
 
+  final List<String> _expenseTypes = [
+    'Utility bills',
+    'Rent',
+    'Groceries',
+    'Food',
+    'Transport',
+    'Other'
+  ];
+
   Future<void> _submitExpense() async {
     setState(() {
       _formSubmitted = true;
-      _isTypeValid = _validateType(_typeTextEditingController.text);
+      _isTypeValid = _validateType(_selectedType);
       _isPriceValid = _validatePrice(_priceEditingController.text);
     });
 
@@ -45,21 +54,19 @@ class _ExpenseInputDialogState extends State<ExpenseInputDialog> {
         createdOn: Timestamp.now(),
         updatedOn: Timestamp.now(),
         isUpdated: false,
-        expenseType: _typeTextEditingController.text,
+        expenseType: _selectedType!,
         comment: _commentTextEditingController.text,
         amount: double.parse(_priceEditingController.text),
       );
       TotalExpense totalExpense = TotalExpense(
-          userId: widget.userId, 
-          createdOn:Timestamp.now(),
+          userId: widget.userId,
+          createdOn: Timestamp.now(),
           amount: double.parse(_priceEditingController.text)
       );
 
       try {
         await widget.expenseService.addExpense(expenses);
-        // await widget.expenseService.addOrUpdateTotalExpense(totalExpense);
         await widget.expenseService.updateAmount(widget.userId, totalExpense.amount);
-        
       } catch (e) {
         print('Error: $e');
       } finally {
@@ -73,13 +80,15 @@ class _ExpenseInputDialogState extends State<ExpenseInputDialog> {
   }
 
   void _clearInputs() {
-    _typeTextEditingController.clear();
     _commentTextEditingController.clear();
     _priceEditingController.clear();
+    setState(() {
+      _selectedType = null;
+    });
   }
 
-  bool _validateType(String type) {
-    return type.isNotEmpty;
+  bool _validateType(String? type) {
+    return type != null && type.isNotEmpty;
   }
 
   bool _validatePrice(String price) {
@@ -99,11 +108,22 @@ class _ExpenseInputDialogState extends State<ExpenseInputDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          TextField(
-            controller: _typeTextEditingController,
+          DropdownButtonFormField<String>(
+            value: _selectedType,
+            hint: const Text("Select Expense Type"),
+            items: _expenseTypes.map((String type) {
+              return DropdownMenuItem<String>(
+                value: type,
+                child: Text(type),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                _selectedType = newValue;
+              });
+            },
             decoration: InputDecoration(
-              hintText: "Type..",
-              errorText: !_isTypeValid && _formSubmitted ? "Type is required" : null,
+              errorText: !_isTypeValid && _formSubmitted ? "Please select an expense type" : null,
             ),
           ),
           TextField(

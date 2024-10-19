@@ -13,6 +13,23 @@ class ExpenseListView extends StatelessWidget {
     required this.expenseService,
   });
 
+  Icon getIconForExpenseType(String expenseType) {
+    switch (expenseType.toLowerCase()) {
+      case 'food':
+        return const Icon(Icons.fastfood, color: Colors.green);
+      case 'transport':
+        return const Icon(Icons.directions_bus, color: Colors.blue);
+      case 'groceries':
+        return const Icon(Icons.shopping_cart, color: Colors.purple);
+      case 'utility bills':
+        return const Icon(Icons.receipt, color: Colors.orange);
+      case 'rent':
+        return const Icon(Icons.house, color: Colors.red);
+      default:
+        return const Icon(Icons.monetization_on, color: Colors.pink);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -54,28 +71,18 @@ class ExpenseListView extends StatelessWidget {
                   ],
                 ),
                 child: ListTile(
-                  contentPadding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                  leading: Text(
-                    expense.expenseType,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                  leading: getIconForExpenseType(expense.expenseType),
                   title: Text(
                     expense.comment,
                     style: const TextStyle(
-
                       fontSize: 16,
                     ),
                   ),
                   subtitle: Text(
-                    DateFormat("dd-MM-yyyy h:mm a")
-                        .format(expense.createdOn.toDate()),
+                    DateFormat("dd-MM-yyyy h:mm a").format(expense.createdOn.toDate()),
                     style: const TextStyle(color: Colors.grey),
                   ),
-
                   trailing: Text(
                     "Rs. ${expense.amount.toStringAsFixed(2)}",
                     style: const TextStyle(
@@ -85,6 +92,7 @@ class ExpenseListView extends StatelessWidget {
                   ),
                   onLongPress: () {
                     expenseService.deleteExpense(expenseId);
+                    expenseService.deductExpenseAmount(userId, expense.amount);
                   },
                 ),
               ),

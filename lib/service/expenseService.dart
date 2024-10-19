@@ -116,5 +116,26 @@ class ExpenseService {
       }
     }
   }
+  Future<void> deductExpenseAmount(String userId, double expenseAmount) async {
+
+
+    // Find the total expense document for the current month
+    QuerySnapshot<TotalExpense> snapshot = await _totalExpenseRef
+        .where('userId', isEqualTo: userId)
+        .limit(1)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      DocumentSnapshot<TotalExpense> totalExpenseDoc = snapshot.docs.first;
+      TotalExpense totalExpense = totalExpenseDoc.data()!;
+
+      double updatedTotalAmount = totalExpense.amount - expenseAmount;
+
+      await _totalExpenseRef.doc(totalExpenseDoc.id).update({
+        'amount': updatedTotalAmount,
+      });
+    }
+  }
+
 
 }

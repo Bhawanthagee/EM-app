@@ -23,7 +23,6 @@ class _StatScreenState extends State<StatScreen> {
   }
 
   Future<void> _loadExpenses() async {
-    // Fetch the expenses based on the userId
     await fetchExpensesByUserId(widget.userId);
   }
 
@@ -72,7 +71,7 @@ class _StatScreenState extends State<StatScreen> {
     return SafeArea(
       child: Scaffold(
         body: isLoading
-            ? const Center(child: CircularProgressIndicator()) // Show loading indicator while fetching data
+            ? const Center(child: CircularProgressIndicator())
             : SfCircularChart(
           title: ChartTitle(text: 'Expense Breakdown'),
           legend: Legend(isVisible: true),

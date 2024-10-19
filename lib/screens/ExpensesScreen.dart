@@ -56,7 +56,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                       ),
                       // Display total expense dynamically
                       StreamBuilder<double>(
-                        stream: _expenseService.getTotalExpenses(widget.userId), // Updated method call
+                        stream: _expenseService.getTotalExpenses(widget.userId),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return const CircularProgressIndicator(

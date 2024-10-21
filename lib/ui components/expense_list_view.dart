@@ -45,7 +45,8 @@ class ExpenseListView extends StatelessWidget {
         if (expenses.isEmpty) {
           return const Center(
             child: Text("Add an Expense!",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)
+            ),
           );
         }
 
@@ -91,7 +92,6 @@ class ExpenseListView extends StatelessWidget {
                     ),
                   ),
                   onLongPress: () {
-                    // Show confirmation dialog
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -101,17 +101,15 @@ class ExpenseListView extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                // Cancel button
                                 Navigator.of(context).pop();
                               },
                               child: const Text("Cancel"),
                             ),
                             TextButton(
                               onPressed: () {
-                                // Confirm deletion
                                 expenseService.deleteExpense(expenseId);
                                 expenseService.deductExpenseAmount(userId, expense.amount);
-                                Navigator.of(context).pop(); // Close the dialog
+                                Navigator.of(context).pop();
                               },
                               child: const Text("Delete"),
                             ),

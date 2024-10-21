@@ -121,66 +121,67 @@ class _StatScreenState extends State<StatScreen> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xFF243642), // Set background color
         body: isLoading
             ? const Center(child: CircularProgressIndicator())
             : SingleChildScrollView( // Added for scroll functionality
           child: Column(
             children: [
-              // First Pie Chart for Current Month Expenses
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0), // Added padding
-                child: Card( // Adding a Card for better visual separation
-                  elevation: 4,
-                  child: Column(
-                    children: [
-                      SfCircularChart(
-                        title: ChartTitle(text: 'Current Month Expenses'),
-                        legend: Legend(isVisible: true),
-                        series: <CircularSeries>[
-                          PieSeries<_ExpenseData, String>(
-                            dataSource: chartDataCurrentMonth,
-                            xValueMapper: (_ExpenseData data, _) => data.expenseType,
-                            yValueMapper: (_ExpenseData data, _) => data.amount,
-                            dataLabelMapper: (_ExpenseData data, _) => data.expenseType,
-                            dataLabelSettings: const DataLabelSettings(isVisible: true),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'Total: Rs ${totalCurrentMonthAmount.toStringAsFixed(2)}', // Updated currency symbol
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+              Container(
+                margin: const EdgeInsets.all(16.0), // Margin for separation
+                decoration: BoxDecoration(
+                  color: const Color(0xFF387478), // Header background color
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    SfCircularChart(
+                      title: ChartTitle(text: 'Current Month Expenses', textStyle: const TextStyle(color: Colors.white)),
+                      legend: Legend(isVisible: true, textStyle: const TextStyle(color: Colors.white)),
+                      series: <CircularSeries>[
+                        PieSeries<_ExpenseData, String>(
+                          dataSource: chartDataCurrentMonth,
+                          xValueMapper: (_ExpenseData data, _) => data.expenseType,
+                          yValueMapper: (_ExpenseData data, _) => data.amount,
+                          dataLabelMapper: (_ExpenseData data, _) => data.expenseType,
+                          dataLabelSettings: const DataLabelSettings(isVisible: true),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'Total: Rs ${totalCurrentMonthAmount.toStringAsFixed(2)}', // Updated currency symbol
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
-
-              // Second Pie Chart for Total Expenses Till Now
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0), // Added padding
-                child: Card( // Adding a Card for better visual separation
-                  elevation: 4,
-                  child: Column(
-                    children: [
-                      SfCircularChart(
-                        title: ChartTitle(text: 'Total Expense Till Now'),
-                        legend: Legend(isVisible: true),
-                        series: <CircularSeries>[
-                          PieSeries<_ExpenseData, String>(
-                            dataSource: chartData, // Assuming same data for the second chart
-                            xValueMapper: (_ExpenseData data, _) => data.expenseType,
-                            yValueMapper: (_ExpenseData data, _) => data.amount,
-                            dataLabelMapper: (_ExpenseData data, _) => data.expenseType,
-                            dataLabelSettings: const DataLabelSettings(isVisible: true),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        'Total: Rs ${totalOverallAmount.toStringAsFixed(2)}', // Updated currency symbol
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+              SizedBox(height: 20), // Space between the two charts
+              Container(
+                margin: const EdgeInsets.all(16.0), // Margin for separation
+                decoration: BoxDecoration(
+                  color: const Color(0xFF387478), // Header background color
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  children: [
+                    SfCircularChart(
+                      title: ChartTitle(text: 'Total Expense Till now', textStyle: const TextStyle(color: Colors.white)),
+                      legend: Legend(isVisible: true, textStyle: const TextStyle(color: Colors.white)),
+                      series: <CircularSeries>[
+                        PieSeries<_ExpenseData, String>(
+                          dataSource: chartData, // Using the same data for the second chart
+                          xValueMapper: (_ExpenseData data, _) => data.expenseType,
+                          yValueMapper: (_ExpenseData data, _) => data.amount,
+                          dataLabelMapper: (_ExpenseData data, _) => data.expenseType,
+                          dataLabelSettings: const DataLabelSettings(isVisible: true),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'Total: Rs ${totalOverallAmount.toStringAsFixed(2)}', // Updated currency symbol
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -197,13 +198,4 @@ class _ExpenseData {
 
   final String expenseType;
   final double amount;
-}
-
-// Data model for expense chart with createdOn date
-class _ExpenseWithDate {
-  _ExpenseWithDate(this.expenseType, this.amount, this.createdOn);
-
-  final String expenseType;
-  final double amount;
-  final DateTime createdOn;
 }

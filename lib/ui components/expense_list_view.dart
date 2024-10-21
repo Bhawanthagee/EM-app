@@ -45,7 +45,7 @@ class ExpenseListView extends StatelessWidget {
         if (expenses.isEmpty) {
           return const Center(
             child: Text("Add an Expense!",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white)),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
           );
         }
 
@@ -91,8 +91,34 @@ class ExpenseListView extends StatelessWidget {
                     ),
                   ),
                   onLongPress: () {
-                    expenseService.deleteExpense(expenseId);
-                    expenseService.deductExpenseAmount(userId, expense.amount);
+                    // Show confirmation dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text("Confirm Deletion"),
+                          content: const Text("Are you sure you want to delete this expense?"),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                // Cancel button
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Cancel"),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                // Confirm deletion
+                                expenseService.deleteExpense(expenseId);
+                                expenseService.deductExpenseAmount(userId, expense.amount);
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: const Text("Delete"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                 ),
               ),

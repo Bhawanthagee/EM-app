@@ -45,7 +45,7 @@ class ExpenseListView extends StatelessWidget {
         if (expenses.isEmpty) {
           return const Center(
             child: Text("Add an Expense!",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white)),
           );
         }
 

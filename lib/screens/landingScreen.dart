@@ -1,5 +1,6 @@
 import 'package:app01/screens/ExpensesScreen.dart';
 import 'package:app01/screens/Stat.dart';
+import 'package:app01/screens/profileScreen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +25,7 @@ class _LandingScreenState extends State<LandingScreen> {
     Screens = [
       ExpensesScreen(userId: widget.userId),
       StatScreen(userId: widget.userId,),
+      ProfileScreen(userId: widget.userId,),
     ];
   }
   int _selectedIndex =0;
@@ -33,7 +35,7 @@ class _LandingScreenState extends State<LandingScreen> {
     return Scaffold(
       extendBody: true,
       backgroundColor: Colors.white60,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
 
         shape: const CircleBorder(),
@@ -47,6 +49,7 @@ class _LandingScreenState extends State<LandingScreen> {
         items: const [
           Icon(Icons.home),
           Icon(Icons.stacked_bar_chart),
+          Icon(Icons.person),
         ],
         onTap: (index){
           setState(() {

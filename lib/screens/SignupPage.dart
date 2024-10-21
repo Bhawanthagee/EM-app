@@ -45,6 +45,7 @@ class _SignupPageState extends State<SignupPage> {
 
         // Create an AppUser instance
         AppUser newUser = AppUser(
+          userId: uid,
           name: _nameController.text,
           email: _emailController.text,
           createdOn: Timestamp.now(),

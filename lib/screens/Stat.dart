@@ -13,13 +13,13 @@ class StatScreen extends StatefulWidget {
 }
 
 class _StatScreenState extends State<StatScreen> {
-  List<_ExpenseData> chartData = []; // For holding the chart data
-  bool isLoading = true; // To show a loading indicator while data is fetched
+  List<_ExpenseData> chartData = [];
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _loadExpenses(); // Call to load expenses
+    _loadExpenses();
   }
 
   Future<void> _loadExpenses() async {
@@ -33,7 +33,7 @@ class _StatScreenState extends State<StatScreen> {
           .where('userId', isEqualTo: userId)
           .get();
 
-      // Use a Map to sum amounts by expense type
+
       Map<String, double> expenseMap = {};
 
       for (var doc in querySnapshot.docs) {

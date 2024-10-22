@@ -43,7 +43,6 @@ class _SignupPageState extends State<SignupPage> {
 
         String uid = userCredential.user!.uid;
 
-        // Create an AppUser instance
         AppUser newUser = AppUser(
           userId: uid,
           name: _nameController.text,
@@ -51,7 +50,6 @@ class _SignupPageState extends State<SignupPage> {
           createdOn: Timestamp.now(),
         );
 
-        // Store the new user in Firestore
         await _databaseService.addUser(uid, newUser);
         
 

@@ -17,8 +17,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? profilePictureUrl;
   String name = "";
   String email = "";
-  bool isLoading = true; // Track loading state
-  String errorMessage = ""; // To store any error messages
+  bool isLoading = true;
+  String errorMessage = "";
 
   @override
   void initState() {
@@ -68,11 +68,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut(); // Sign out the user
-    // Navigate back to the login screen
+    await FirebaseAuth.instance.signOut();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const LoginPage()), // Replace with your login screen
+      MaterialPageRoute(builder: (context) => const LoginPage()),
     );
   }
 
@@ -127,15 +126,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: const Text('Edit Profile'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Change Password logic here
-              },
-              child: const Text('Change Password'),
-            ),
+
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _logout(context), // Call the logout function
+              onPressed: () => _logout(context),
               child: const Text('Logout'),
             ),
             const SizedBox(height: 20),
@@ -146,25 +140,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.linkedin),
                   onPressed: () {
-                    // Open LinkedIn profile
+
                   },
                 ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.twitter),
                   onPressed: () {
-                    // Open Twitter profile
+
                   },
                 ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.facebook),
                   onPressed: () {
-                    // Open Facebook profile
+
                   },
                 ),
                 IconButton(
                   icon: const FaIcon(FontAwesomeIcons.instagram),
                   onPressed: () {
-                    // Open Instagram profile
+
                   },
                 ),
               ],

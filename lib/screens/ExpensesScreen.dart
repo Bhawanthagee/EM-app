@@ -11,7 +11,6 @@ class ExpensesScreen extends StatefulWidget {
   State<ExpensesScreen> createState() => _ExpensesScreenState();
 }
 
-
 class _ExpensesScreenState extends State<ExpensesScreen> {
   final ExpenseService _expenseService = ExpenseService();
 
@@ -54,7 +53,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                         indent: 40,
                         endIndent: 40,
                       ),
-                      // Display total expense dynamically
                       StreamBuilder<double>(
                         stream: _expenseService.getTotalExpenses(widget.userId),
                         builder: (context, snapshot) {
@@ -72,14 +70,11 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                               ),
                             );
                           }
-
-                          // Total expense fetched successfully
                           double totalExpense = snapshot.data ?? 0;
                           String formattedExpense = NumberFormat.currency(
-                            locale: 'en_IN', // Format for Indian rupees
+                            locale: 'en_IN',
                             symbol: 'Rs ',
                           ).format(totalExpense);
-
                           return Text(
                             formattedExpense,
                             style: TextStyle(
@@ -97,8 +92,6 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                           );
                         },
                       ),
-
-
                     ],
                   ),
                 ),

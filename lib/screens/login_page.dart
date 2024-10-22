@@ -53,10 +53,11 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+backgroundColor: Colors.white,
 
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
+
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(

@@ -54,8 +54,6 @@ class ExpenseService {
     await _expenseRef.doc(userId).delete();
   }
 
-  //credit related functions
-
   Future<void> addCredits(Credit credit) async {
     await _creditRef.add(credit);
   }
@@ -117,9 +115,6 @@ class ExpenseService {
     }
   }
   Future<void> deductExpenseAmount(String userId, double expenseAmount) async {
-
-
-    // Find the total expense document for the current month
     QuerySnapshot<TotalExpense> snapshot = await _totalExpenseRef
         .where('userId', isEqualTo: userId)
         .limit(1)

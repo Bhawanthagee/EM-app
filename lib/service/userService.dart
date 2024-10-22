@@ -6,17 +6,16 @@ import '../model/user.dart';
 class UserService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // Method to get user data by userId
   Stream<AppUser?> getUserData(String userId) {
     return _firestore
-        .collection('users') // Assuming you have a 'users' collection
+        .collection('users')
         .doc(userId)
         .snapshots()
         .map((snapshot) {
       if (snapshot.exists) {
         return AppUser.fromJson(snapshot.data()!);
       }
-      return null; // Return null if the user doesn't exist
+      return null;
     });
   }
 

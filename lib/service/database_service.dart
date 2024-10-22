@@ -18,27 +18,8 @@ class DatabaseService{
       fromFirestore: (snapshot, _) => AppUser.fromJson(snapshot.data()!),
       toFirestore: (user, _) => user.toJson(),
     );
-    _todosRef = _firestore.collection(TODO_COLLOECTION_REF).withConverter<Todo>(
-        fromFirestore: (snapshots, _)=> Todo.fromJson(snapshots.data()!,),
-        toFirestore: (todo,_)=>todo.toJson() );
 
-  //Todos related operations
   }
-  Stream<QuerySnapshot>getTodos(){
-    return _todosRef.snapshots();
-  }
-  void addTodo(Todo todo)async{
-    _todosRef.add(todo);
-  }
-
-  void updateTodo(String todoId, Todo todo){
-    _todosRef.doc(todoId).update(todo.toJson());
-  }
-  void deleteTodo(String todoId){
-    _todosRef.doc(todoId).delete();
-  }
-
-  //User related operations
   Future<void> addUser(String id, AppUser user  ) async {
     await _usersRef.add(user);
   }
